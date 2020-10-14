@@ -1,16 +1,25 @@
 package android.eservices.recyclerview;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private GameAdapter mAdapter;
+
     private Toolbar toolbar;
     private CoordinatorLayout coordinatorLayout;
 
@@ -29,8 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         //TODO Bind recyclerview and set its adapter.
-
+        this.recyclerView = findViewById(R.id.my_recyclerview);
+        this.layoutManager = new LinearLayoutManager(this);
         //Use data generator to get data to display.
+        List<GameViewModel> gameViewModelList = DataGenerator.generateData();
+        this.mAdapter = new GameAdapter();
+        this.mAdapter.bindGameViewModelList(gameViewModelList);
+        this.recyclerView.setLayoutManager(this.layoutManager);
+        this.recyclerView.setAdapter(this.mAdapter);
+
     }
 
     public void displaySnackBar(String message) {
